@@ -1,0 +1,4 @@
+rootProject.name = 'raspberry-pi-tools'
+include 'stats-collector'
+include 'stats-receiver'
+
