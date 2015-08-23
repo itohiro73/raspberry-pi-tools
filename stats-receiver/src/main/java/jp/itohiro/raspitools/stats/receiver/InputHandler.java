@@ -45,6 +45,7 @@ public class InputHandler implements Runnable {
 
     private void readLineAndWriteToFile(InputStream in) throws IOException {
         DataInputStream dio = new DataInputStream(in);
+        String hostname = dio.readUTF();
         int ip1 = dio.readByte() & 0xFF;
         int ip2 = dio.readByte() & 0xFF;
         int ip3 = dio.readByte() & 0xFF;
@@ -53,7 +54,7 @@ public class InputHandler implements Runnable {
         int temperature = dio.readInt();
         LocalDateTime time = LocalDateTime.ofInstant(Instant.ofEpochMilli(currentTimeMillis), ZoneId.systemDefault());
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-        String line = String.valueOf(ip1 + "." + ip2 + "." + ip3 + "." + ip4 + " " + dateTimeFormatter.format(time) + " " + temperature + "\n");
+        String line = hostname + "," + ip1 + "." + ip2 + "." + ip3 + "." + ip4 + "," + dateTimeFormatter.format(time) + "," + temperature + "\n";
 
         LOGGER.info("Writing: " + line);
         Path testFile = Paths.get(properties.getTemperatureFilePath());

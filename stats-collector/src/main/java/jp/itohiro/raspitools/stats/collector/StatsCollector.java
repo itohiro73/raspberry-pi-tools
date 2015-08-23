@@ -29,6 +29,7 @@ public class StatsCollector {
             InetAddress localHostAddress = Inet4Address.getLocalHost();
 
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+            dos.writeUTF(localHostAddress.getHostName());
             dos.write(localHostAddress.getAddress());
             dos.writeLong(System.currentTimeMillis());
             dos.writeInt(Integer.valueOf(lines.get(0)));
