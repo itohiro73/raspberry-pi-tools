@@ -7,10 +7,14 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class StatsReceiver {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatsReceiver.class);
     private static final ReceiverProperties RECEIVER_PROPERTIES = new ReceiverProperties();
+    private static final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(4);
 
     public static void main(String[] args) {
         try {
@@ -21,7 +25,7 @@ public class StatsReceiver {
             while(true){
                 Socket socket = server.accept();
                 LOGGER.info("Connection established.");
-                new Thread(new InputHandler(socket, RECEIVER_PROPERTIES)).start();
+                EXECUTOR_SERVICE.execute(new InputHandler(socket, RECEIVER_PROPERTIES));
             }
 
         } catch (IOException e) {
