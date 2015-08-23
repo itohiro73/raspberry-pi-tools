@@ -2,6 +2,7 @@ group 'jp.itohiro.raspitools'
 version '0.0.1-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
 
@@ -16,11 +17,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'Stats Collector', 'Implementation-Version': 1.0
-        attributes "Main-Class" : "jp.itohiro.raspitools.stats.collector.StatsCollector"
-    }
-    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    from configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
-}
+mainClassName = 'jp.itohiro.raspitools.stats.collector.StatsCollector'
